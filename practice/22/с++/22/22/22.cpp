@@ -1,87 +1,85 @@
-﻿#include <iostream>
-#include <vector>     // for using dynamic arrays
-#include <algorithm>  // for std::find
-#include <iterator>   // for std::size
+﻿#include<iostream>
+#include<vector>
+#include<string>
 
-using visits_t = std::vector<std::pair<int, int>>;
-using exits_t = std::vector<char>;
+using namespace std;
+string maze[25] = {
+"####B######################",
+"# # # # # #",
+"# # # ###### #### ####### #",
+"# # # # # # #",
+"# # # ######### # ##### #",
+"# # # # # # # #",
+"### ### ### ############# #",
+"# # # # # #",
+"# # # ####### ###########",
+"# # # # # # C",
+"# # ##### ### # # ####### #",
+"# # # ### # # # #",
+"# ##### ### # ######### #",
+"######### ### # #",
+"# ####### ### #############",
+"A # ### # #",
+"# ############# ### # # # #",
+"# ### # # ### # # # #",
+"# ######### # # ### # # # F",
+"# ### # # # # # #",
+"# ######### # ##### # # # #",
+"# ####### # # # #",
+"# ####### ######### #######",
+"# ######### #",
+"#######E############D######" };
+int m = 0;
+void cont(int x1, int y1, int q) {
+	if (!(x1 > 27 || y1 > 24 || x1 < 0 || y1 < 0)) {
+		if ((maze[y1][x1] >= 'A') && (maze[y1][x1] <= 'Z')) {
+			cout << maze[y1][x1] << " ";
+			m = 1;
+			return;
+		}
+		else {
+			if (!(x1 >= 27 || y1 >= 24 || x1 <= 0 || y1 <= 0)) {
+				if (maze[y1][x1] == '#') { return; }
+				else {
+					if (maze[y1 + 1][x1] != '#' && q != 2) {
+						cont(x1, y1 + 1, 1);
 
-const std::string maze[] = {
-	"####B######################",
-	"# #       #   #      #    #",
-	"# # # ###### #### ####### #",
-	"# # # #       #   #       #",
-	"#   # # ######### # ##### #",
-	"# # # #   #       #     # #",
-	"### ### ### ############# #",
-	"# #   #     # #           #",
-	"# # #   ####### ###########",
-	"# # # #       # #         C",
-	"# # ##### ### # # ####### #",
-	"# # #     ### # #       # #",
-	"#   ##### ### # ######### #",
-	"######### ### #           #",
-	"# ####### ### #############",
-	"A           #   ###   #   #",
-	"# ############# ### # # # #",
-	"# ###       # # ### # # # #",
-	"# ######### # # ### # # # F",
-	"#       ### # #     # # # #",
-	"# ######### # ##### # # # #",
-	"# #######   #       #   # #",
-	"# ####### ######### #######",
-	"#         #########       #",
-	"#######E############D######"
-};
+					}
+					if (maze[y1 - 1][x1] != '#' && q != 1) {
+						cont(x1, y1 - 1, 2);
 
-bool is_wall_or_bad_point(int x, int y) {
-	return x < 0 || x >= maze[0].length()
-		|| y < 0 || y >= std::size(maze)
-		|| maze[y][x] == '#';
-}
+					}
+					if (maze[y1][x1 + 1] != '#' && q != 4) {
+						cont(x1 + 1, y1, 3);
 
-void crawl_maze(visits_t& visited, exits_t& exits, int x, int y) {
+					}
+					if (maze[y1][x1 - 1] != '#' && q != 3) {
+						cont(x1 - 1, y1, 4);
 
-	if (is_wall_or_bad_point(x, y)) {
+					}
+				}
+			}
+		}
+	}
+	else {
 		return;
 	}
-
-	if (std::find(visited.begin(), visited.end(), std::make_pair(x, y)) != visited.end()) {
-		return;
-	}
-
-	visited.push_back(std::make_pair(x, y));
-
-	if (maze[y][x] != ' '
-		&& std::find(exits.begin(), exits.end(), maze[y][x]) == exits.end()) {
-		exits.push_back(maze[y][x]);
-	}
-
-	crawl_maze(visited, exits, x + 1, y);
-	crawl_maze(visited, exits, x - 1, y);
-	crawl_maze(visited, exits, x, y + 1);
-	crawl_maze(visited, exits, x, y - 1);
-
 }
 
 int main() {
-	setlocale(LC_ALL, "Russian");
-	visits_t visited;
-	exits_t  exits;
-
 	int x, y;
-	std::cout << "Введите координаты x, y через пробел: ";
-	std::cin >> x >> y;
-
-	if (is_wall_or_bad_point(x, y) {
-		std::cout << "Неверные координаты" << std::endl;
+	setlocale(0, "");
+	cin >> x >> y;
+	if (x > 27 || y > 24 || x < 0 || y < 0) {
+		cout << "Не верные координаты";
+		m = 1;
 	}
 	else {
-		crawl_maze(visited, exits, x, y);
-
-			for (char e : exits) {
-				std::cout << e << " ";
-			}   std::cout << std::endl;
+		if (maze[y][x] == '#') {
+			cout << "Не верные координаты";
+			m = 1;
+		}
+		else cont(x, y, 0);
 	}
-
+	if (m == 0) cout << "Выхода нет";
 }
