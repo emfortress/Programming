@@ -1,0 +1,6 @@
+﻿  10.cpp
+C:\Users\Emfortress\Desktop\programming\practice\10\c++\10\10\10.cpp(11,12): warning C4244: инициализация: преобразование "__int64" в "int", возможна потеря данных
+C:\Users\Emfortress\Desktop\programming\practice\10\c++\10\10\10.cpp(17,14): warning C4244: =: преобразование "__int64" в "int", возможна потеря данных
+C:\Users\Emfortress\Desktop\programming\practice\10\c++\10\10\10.cpp(27,20): warning C4244: =: преобразование "__int64" в "int", возможна потеря данных
+C:\Users\Emfortress\Desktop\programming\practice\10\c++\10\10\10.cpp(42,20): warning C4244: =: преобразование "__int64" в "int", возможна потеря данных
+  10.vcxproj -> C:\Users\Emfortress\Desktop\programming\practice\10\c++\10\Debug\10.exe

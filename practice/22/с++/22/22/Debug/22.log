@@ -1,0 +1,9 @@
+﻿  22.cpp
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(38,20): warning C4018: >=: несоответствие типов со знаком и без знака
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(39,17): warning C4018: >=: несоответствие типов со знаком и без знака
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(87,1): error C2059: синтаксическая ошибка: }
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(77,68): error C2059: синтаксическая ошибка: ;
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(79,2): error C2059: синтаксическая ошибка: else
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(79,1): error C2143: синтаксическая ошибка: отсутствие ";" перед "{"
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(79,1): error C2447: {: отсутствует заголовок функции (возможно, используется формальный список старого типа)
+C:\Users\Emfortress\Desktop\programming\practice\22\с++\22\22\22.cpp(87,1): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"
