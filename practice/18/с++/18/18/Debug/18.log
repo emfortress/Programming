@@ -1,5 +1,0 @@
-﻿  18.cpp
-  The contents of <string_view> are available only with C++17 or later.
-C:\Users\Emfortress\Desktop\programming\practice\18\с++\18\18\18.cpp(12,20): warning C4018: <: несоответствие типов со знаком и без знака
-C:\Users\Emfortress\Desktop\programming\practice\18\с++\18\18\18.cpp(16,20): warning C4018: <: несоответствие типов со знаком и без знака
-  18.vcxproj -> C:\Users\Emfortress\Desktop\programming\practice\18\с++\18\Debug\18.exe
