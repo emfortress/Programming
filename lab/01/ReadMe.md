@@ -4,11 +4,11 @@
 ФИЗИКО-ТЕХНИЧЕСКИЙ ИНСТИТУТ<br>
 Кафедра компьютерной инженерии и моделирования</p>
 <br>
-<h3 align="center">Отчёт по лабораторной работе № X<br> по дисциплине "Программирование"</h3>
+<h3 align="center">Отчёт по лабораторной работе № 1<br> по дисциплине "Программирование"</h3>
 <br><br>
 <p>студента 1 курса группы ПИ-б-о-203(1)<br>
-Сайдалиев Артур Ридванович<br>
-направления подготовки 09.03.0X "программная инженерия"</p>
+Трофанчук Тимур Викторович<br>
+направления подготовки 09.03.04 "программная инженерия"</p>
 <br><br>
 <table>
 <tr><td>Научный руководитель<br> старший преподаватель кафедры<br> компьютерной инженерии и моделирования</td>
@@ -31,7 +31,7 @@
 <hr>
 
 <h2>
-	Выполнение работы 
+	Выполнение работы
 </h2>
 <p>API ключ по-умолчанию созданный сервисом:<br>d9bdc7022a03819090040e7e05691e2c</p>
 <br>
@@ -70,7 +70,7 @@ std::string informarion() {
 		"&exclude=" + exclude + "&appid=" + appid + "&units=" + units + "&lang=" + lang;
 
 	auto result = owm.Get(request.c_str());
-	
+
 
 	if (!result) {
 		return "err";
@@ -153,7 +153,7 @@ std::string parascha() {
 
 std::string htmlsran() {
 	json j = json::parse(parascha());
-	
+
 	std::ifstream file_html("index.html");
 	std::string str;
 
@@ -201,7 +201,7 @@ int main() {
 </p>
 <p>
 	Код клиента:
-	<code>
+	```python
 		from tkinter import *
 import json
 import requests
@@ -240,7 +240,7 @@ desc.pack(pady=0)
 temp.pack(expand=True)
 reload_data()
 root.mainloop()
-	</code>
+	```
 
 </p>
 
