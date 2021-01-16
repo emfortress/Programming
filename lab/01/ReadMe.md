@@ -19,17 +19,13 @@
 <br><br>
 <p align="center">Симферополь, 2020</p>
 <hr>
-
 <h2 align="center">
 	ПОСТАНОВКА ЗАДАЧИ
 </h2>
 <p align="center">Разработать сервис предоставляющий данные о погоде в городе Симферополе на момент запроса.  В качестве источника данных о погоде используйте: http://openweathermap.org/. В состав сервиса входит: серверное приложение на языке С++ и клиентское приложение на языке Python.
-
 Серверное приложение (далее Сервер) предназначенное для обслуживания клиентских приложений и минимизации количества запросов к сервису openweathermap.org. Сервер должен обеспечивать возможность получения данных в формате JSON и виде html виджета (для вставки виджета на страницу будет использоваться iframe).
-
 Клиентское приложение должно иметь графический интерфейс отображающий сведения о погоде и возможность обновления данных по требованию пользователя.</p>
 <hr>
-
 <h2>
 	Выполнение работы
 </h2>
@@ -54,8 +50,6 @@
 using namespace httplib;
 #include "nlohmann/json.hpp"
 using json = nlohmann::json;
-
-
 Client owm("http://api.openweathermap.org");
 std::string latitude = "45.0522222222";
 std::string longitude = "33.9744444444";
@@ -63,34 +57,22 @@ std::string exclude = "current,minutely,daily,alerts";
 std::string lang = "ru";
 std::string units = "metric";
 std::string appid = "d9bdc7022a03819090040e7e05691e2c";
-
 std::string informarion() {
-
 	std::string request = "/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude +
 		"&exclude=" + exclude + "&appid=" + appid + "&units=" + units + "&lang=" + lang;
-
 	auto result = owm.Get(request.c_str());
-
-
 	if (!result) {
 		return "err";
 	}
-
 	int status_code = result->status;
-
 	if (status_code < 200 || status_code >= 300) {
 		return std::to_string( status_code);
 	}
-
 	return result->body;
 }
-
-
 std::string time_infa() {
 	Client cli("http://worldtimeapi.org");
-
 	auto res = cli.Get("/api/timezone/Europe/Simferopol");
-
 	if (res)
 	{
 		if (res->status == 200) {
@@ -105,10 +87,7 @@ std::string time_infa() {
 	{
 		return "err";
 	}
-
 }
-
-
 
 std::string parascha() {
 	json ti = json::parse(time_infa());
@@ -131,17 +110,14 @@ std::string parascha() {
 			}
 		}
 	}
-
 	if (new_inf.size() > 0) {
 		return to_string(new_inf);
 	}
 	else
 	{
 		pi = json::parse(informarion());
-
 		std::ofstream file_write("INFAoPOGODE.json");
 		file_write << pi;
-
 		new_inf.push_back({
 					{"temp",pi["hourly"][0]["temp"] },
 					{"description",pi["hourly"][0]["weather"][0]["description"]},
@@ -150,47 +126,30 @@ std::string parascha() {
 		return to_string(new_inf);
 	}
 }
-
 std::string htmlsran() {
 	json j = json::parse(parascha());
-
 	std::ifstream file_html("index.html");
 	std::string str;
-
 	if (file_html.is_open()) {
 		getline(file_html, str, '\0');
 		file_html.close();
 	}
 	int d = str.find("{hourly[i].weather[0].description}");
 	str.replace(d, 34, to_string(j[0]["description"]));
-
-
 	int t1 = str.find("{hourly[i].temp}");
 	str.replace(t1, 16, to_string(j[0]["temp"]));
-
 	int t2 = str.find("{hourly[i].temp}");
 	str.replace(t2, 16, to_string(j[0]["temp"]));
-
 	int i = str.find("{hourly[i].weather[0].icon}");
 	str.replace(i, 27, j[0]["icon"]);
 	return str;
-
 }
-
-
 void get_response_raw(const Request& req, Response& res) {
-
 	res.set_content(parascha(), "text/json");
-
 }
-
-
 void get_response(const Request& req, Response& res) {
-
 	res.set_content(htmlsran(), "text/html");
-
 }
-
 int main() {
 	Server svr;
 	svr.Get("/", get_response);
@@ -205,23 +164,19 @@ int main() {
 		from tkinter import *
 import json
 import requests
-
 def reload_data(event=None):
 	try:
 		response = requests.get('http://localhost:2020/raw').content.decode("utf8")
 		forecast_j = json.loads(response)
-
 		desc.config(text=str(forecast_j["description"]))
 		temp.config(text=str(round(forecast_j["temp"])) + "°C")
 	except requests.exceptions.ConnectionError:
 		pass
-
 root = Tk()
 root.title("Погода")
 root.pack_propagate(0)
 root.bind("<Button-1>", reload_data)
 root.geometry("200x250")
-
 _yellow = "#ffb84d"
 _white = "#ffffff"
 _w = 100
@@ -241,9 +196,7 @@ temp.pack(expand=True)
 reload_data()
 root.mainloop()
 	```
-
 </p>
-
 <p>
 	скриншот клиента
 </p>
