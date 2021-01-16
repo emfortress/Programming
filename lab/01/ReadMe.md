@@ -42,7 +42,7 @@
 </p>
 <p>
 	Исходный код сервера:
-	<code>
+	```c++
 		#include <iostream>
 #include <fstream>
 #include <string>
@@ -156,7 +156,7 @@ int main() {
 	svr.Get("/raw", get_response_raw);
 	svr.listen("localhost", 2020);
 }
-	</code>
+```
 </p>
 <p>
 	Код клиента:
