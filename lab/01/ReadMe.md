@@ -195,9 +195,7 @@ city.pack(pady=0)
 desc.pack(pady=0)
 temp.pack(expand=True)
 reload_data()
-root.mainloop()
-
-```
+root.mainloop()```
 </p>
 <p>
 	скриншот клиента
