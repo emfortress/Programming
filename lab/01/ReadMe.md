@@ -42,7 +42,7 @@
 </p>
 <p>
 	Исходный код сервера:
-	```c++
+	```cpp
 		#include <iostream>
 #include <fstream>
 #include <string>
