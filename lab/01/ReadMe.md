@@ -6,9 +6,9 @@
 <br>
 <h3 align="center">Отчёт по лабораторной работе № 1<br> по дисциплине "Программирование"</h3>
 <br><br>
-<p>студента 1 курса группы ПИ-б-о-203(1)<br>
+<p>студента 1 курса группы ПИ-б-о-202(2)<br>
 Трофанчук Тимур Викторович<br>
-направления подготовки 09.03.04 "программная инженерия"</p>
+направления подготовки 09.03.04 "Программная инженерия"</p>
 <br><br>
 <table>
 <tr><td>Научный руководитель<br> старший преподаватель кафедры<br> компьютерной инженерии и моделирования</td>
@@ -19,33 +19,32 @@
 <br><br>
 <p align="center">Симферополь, 2020</p>
 <hr>
-<h2 align="center">
-	ПОСТАНОВКА ЗАДАЧИ
-</h2>
-<p align="center">Разработать сервис предоставляющий данные о погоде в городе Симферополе на момент запроса.  В качестве источника данных о погоде используйте: http://openweathermap.org/. В состав сервиса входит: серверное приложение на языке С++ и клиентское приложение на языке Python.
+
+<!-- ![](./image/pic1.png) -->
+## Цель:
+
+1. Закрепить навыки разработки многофайловыx приложений;
+2. Изучить способы работы с API web-сервиса;
+3. Изучить процесс сериализации/десериализации данных в/из json;
+4. Получить базовое представление о сетевом взаимодействии приложений;
+
+## Постановка задачи
+Разработать сервис предоставляющий данные о погоде в городе Симферополе на момент запроса. В качестве источника данных о погоде использовать: http://openweathermap.org/. В состав сервиса входит: серверное приложение на языке С++ и клиентское приложение на языке Python.
 Серверное приложение (далее Сервер) предназначенное для обслуживания клиентских приложений и минимизации количества запросов к сервису openweathermap.org. Сервер должен обеспечивать возможность получения данных в формате JSON и виде html виджета (для вставки виджета на страницу будет использоваться iframe).
-Клиентское приложение должно иметь графический интерфейс отображающий сведения о погоде и возможность обновления данных по требованию пользователя.</p>
-<hr>
-<h2>
-	Выполнение работы
-</h2>
-<p>API ключ по-умолчанию созданный сервисом:<br>d9bdc7022a03819090040e7e05691e2c</p>
-<br>
-<p>
+Клиентское приложение должно иметь графический интерфейс отображающий сведения о погоде и возможность обновления данных по требованию пользователя.
+
+## Выполнение работы
+API ключ по-умолчанию созданный сервисом:<br>d9bdc7022a03819090040e7e05691e2c
+
 Запрос, созданный к серверу погоды включает в себя широту и долготу места, для которого необходимо получить погоду, исключить все типы прогноза кроме почасового, ключ API, метрические единицы изменения (цельсий) и описание на русском языке:
-</p>
-<br><p>
-	api.openweathermap.org/data/2.5/onecall?lat=45.0522222222&lon=33.9744444444&exclude=current,minutely,daily,alerts&appid=d9bdc7022a03819090040e7e05691e2c&units=metric&lang=ru
-</p>
-<p>
-	Запрос для сервера погоды включает в себя город, время которого необходимо получить:<br>http://worldtimeapi.org/api/timezone/Europe/Simferopol
-</p>
-<p>
-	Исходный код сервера:
-```
 
+api.openweathermap.org/data/2.5/onecall?lat=45.0522222222&lon=33.9744444444&exclude=current,minutely,daily,alerts&appid=d9bdc7022a03819090040e7e05691e2c&units=metric&lang=ru
 
-		#include <iostream>
+Запрос для сервера погоды включает в себя город, время которого необходимо получить: http://worldtimeapi.org/api/timezone/Europe/Simferopol
+
+Исходный код сервера:
+```cpp
+#include <iostream>
 #include <fstream>
 #include <string>
 #include "cpp_httplib/httplib.h"
@@ -90,7 +89,6 @@ std::string time_infa() {
 		return "err";
 	}
 }
-
 std::string parascha() {
 	json ti = json::parse(time_infa());
 	json pi;
@@ -159,51 +157,68 @@ int main() {
 	svr.listen("localhost", 2020);
 }
 ```
-</p>
-<p>
-	Код клиента:
-	```python
 
-		from tkinter import *
+Код клиента:
+```python
+from tkinter import *
 import json
 import requests
+
 def reload_data(event=None):
 	try:
-		response = requests.get('http://localhost:2020/raw').content.decode("utf8")
+		response = requests.get('http://localhost:3000/raw').content.decode("utf8")
 		forecast_j = json.loads(response)
+
 		desc.config(text=str(forecast_j["description"]))
-		temp.config(text=str(round(forecast_j["temp"])) + "°C")
+		temp.config(text=str(forecast_j["temp"]) + "°C")
 	except requests.exceptions.ConnectionError:
 		pass
+
 root = Tk()
 root.title("Погода")
 root.pack_propagate(0)
 root.bind("<Button-1>", reload_data)
-root.geometry("200x250")
+
 _yellow = "#ffb84d"
 _white = "#ffffff"
 _w = 100
 _h = 30
+
 top_frame =    Frame(root, bg=_yellow, width=_w, height=_h)
 middle_frame = Frame(root, bg=_white,  width=_w, height=_h*3)
 bottom_frame = Frame(root, bg=_yellow, width=_w, height=_h)
+
 top_frame.pack(side=TOP, fill=X)
 middle_frame.pack(expand=True, fill=BOTH)
 bottom_frame.pack(side=BOTTOM, fill=X)
+
 city = Label(top_frame, font=("Calibri Bold", 12), text="Симферополь", bg=_yellow)
 desc = Label(top_frame, font=("Calibri", 12), bg=_yellow)
-temp = Label(middle_frame, font=("Liberation Sans Bold", 48), bg=_white)
+temp = Label(middle_frame, font=("Impact", 48), bg=_white)
+
 city.pack(pady=0)
 desc.pack(pady=0)
 temp.pack(expand=True)
+
 reload_data()
-root.mainloop()```
-</p>
-<p>
-	скриншот клиента
-</p>
-<img src="https://sun9-65.userapi.com/impg/g2XS8MqF-N1R7nEkR4QAS3djpMpaJvEed5GfGw/8Jy7DzTkpv8.jpg?size=211x283&quality=96&proxy=1&sign=9e6e33dcfab6e872d0605eab21c4cc37">
-<p>
-	скриншот сервера
-</p>
-<img src="https://sun9-5.userapi.com/impg/2gWEbG5ue3jJLxDU4PKWKjnddNN21atjG2ODOg/PqfQad8NddI.jpg?size=445x183&quality=96&proxy=1&sign=12e7a35a5119746304018174e991a0de">
+root.mainloop()
+```
+
+скриншот клиента:
+
+![](https://sun9-65.userapi.com/impg/g2XS8MqF-N1R7nEkR4QAS3djpMpaJvEed5GfGw/8Jy7DzTkpv8.jpg?size=211x283&quality=96&proxy=1&sign=9e6e33dcfab6e872d0605eab21c4cc37)
+
+Рис 1 окно клиента
+
+
+
+скриншот сервера:
+
+![](https://sun9-5.userapi.com/impg/2gWEbG5ue3jJLxDU4PKWKjnddNN21atjG2ODOg/PqfQad8NddI.jpg?size=445x183&quality=96&proxy=1&sign=12e7a35a5119746304018174e991a0de)
+
+Рис 2 скриншот работы сервера
+
+## Вывод по работе.
+Цель работы была успешно достигнута. Было выполнено:
+- Создание сервера на языке С++, обращающегося к openweathermap.com и возвращающий виджет или описание и температуру в формате json
+- Приложение с графическим интерфейсом, написанное на языке Python с использованием библиотеки Tkinter, получающее и обрабатывающее данные из сервера.
