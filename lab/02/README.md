@@ -6,8 +6,8 @@
 <br>
 <h3 align="center">Отчёт по лабораторной работе № X<br> по дисциплине "Программирование"</h3>
 <br><br>
-<p>студента 1 курса группы ПИ-б-о-203(1)<br>
-Сайдалиев Артур Ридванович<br>
+<p>студента 1 курса группы ПИ-б-о-202(2)<br>
+Трофанчук Тимур Викторович<br>
 направления подготовки 09.03.0X "программная инженерия"</p>
 <br><br>
 <table>
@@ -39,7 +39,7 @@
 
 Регистрацию webhook-ов сторонних сервисов;
 
-Отправку данных на сторонние сервисы. 
+Отправку данных на сторонние сервисы.
 
 В качестве стороннего сервиса реализуйте приложение на языке Python выполняющее следующие функции:
 
@@ -78,7 +78,7 @@
 
 <br><hr>
 <p>
-	Исходный код серверного приложения: 
+	Исходный код серверного приложения:
 	<code>
 		#include <iostream>
 #include <string>
@@ -147,7 +147,7 @@ std::string File_parse(std::string FileName) {
 void delet(std::string link) {
     json conf = config();
 
-  
+
 
     int leng = count();
     for (int i = 0; i < leng; i++)
@@ -158,7 +158,7 @@ void delet(std::string link) {
             conf_file << conf;
         }
     }
-    
+
 }
 
 void Sett(std::string set) {
@@ -166,7 +166,7 @@ void Sett(std::string set) {
 
     std::ofstream File_config("config.json");
 
-   
+
     conf["webhooks"].push_back(set);
 
     File_config <<  conf;
@@ -205,7 +205,7 @@ std::string basket(json req) {
     i += 1;
     json j = json::parse(File_parse("check.json"));
     j["user_id"] = req["session"]["user"]["user_id"];
-    json s = { 
+    json s = {
         {"item", req["request"]["nlu"]["tokens"][3]},
         {"price", req["request"]["nlu"]["entities"][0]["value"]}
        };
@@ -291,7 +291,7 @@ void end_of_purchase() {
             std::cout << "Error code: " << err << std::endl;
         }
     }
-    
+
 }
 
 
@@ -300,7 +300,7 @@ std::string answer(std::string command , json req) {
     std::string tts;
     std::string text;
     json help_state_buttons = {
-        
+
     {
         {"title", u8"Корзина"},
         {"hide", true}
@@ -339,7 +339,7 @@ std::string answer(std::string command , json req) {
             {"hide",true}
         },
         {
-        
+
             {"title", u8"Выйти из этого режима"},
             {"hide", true}
         }
@@ -406,19 +406,19 @@ std::string answer(std::string command , json req) {
     else if(mode == 2)
     {
         if (req["request"]["nlu"]["tokens"][0] == u8"добавь") {
-            
+
             basket(req);
             text = u8"Добавлено";
             if (tts_bool) {
                 tts = u8"добавлено";
             }
-            else 
+            else
             {
                 tts = "";
             }
 
         }
-        else if (req["request"]["nlu"]["tokens"][0] == u8"удалить") 
+        else if (req["request"]["nlu"]["tokens"][0] == u8"удалить")
         {
             if (i != 0) {
                 std::string d = del(req);
@@ -455,7 +455,7 @@ std::string answer(std::string command , json req) {
                     tts = "";
                 }
             }
-            
+
 
         }
         else if (command == u8"очистить корзину") {
@@ -564,7 +564,7 @@ void gen_response(const Request& req, Response& res) {
 }
 
 void gen_response_webhooks(const Request& req, Response& res){
-     
+
     if (req.has_param("del")) {
         delet(req.get_param_value("del"));
     }
@@ -593,11 +593,11 @@ void post_respons(const Request& req, Response& res) {
 
 
     }
-    else 
+    else
     {
 
         str = answer(j["request"]["command"], j);
-       
+
     }
      res.set_content(str, "application/json; charset=UTF-8");
 }
@@ -606,7 +606,7 @@ void test() {
     json j = json::parse(File_parse("check.json"));
     j["user_id"] = "svsvd";
     json s = { {"id","sdvsddsdsdv"} };
-    j["check"].push_back(s); 
+    j["check"].push_back(s);
     std::ofstream Check_File("check.json");
 
     Check_File << j;
@@ -639,7 +639,7 @@ def write_from_buf():
     global buf, next_line
     book = openpyxl.load_workbook('data.xlsx')
     sheet = book.active
-    
+
     for line in buf:
         for i in range(5):
             sheet.cell(next_line, i + 1).value = line[i]
